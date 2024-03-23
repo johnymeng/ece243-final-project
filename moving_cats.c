@@ -504,6 +504,12 @@ static const short int ninja_cat[]  = {
 #define TALL_CAT_HEIGHT 60
 #define TALL_CAT_WIDTH 25
 
+//holds values for hex display
+static const short int hex_disp[10] = 
+{
+   0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110, 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01100111
+};
+
 // array size is 3000
 static const short int tall_cat[]  = {
   0xafbf, 0xb7bf, 0xb79f, 0xaf9f, 0xaf9f, 0xa79f, 0xa79f, 0xa79f, 0xa79f, 0xa79f, 0xa79f, 0x9f9f, 0x9f9f, 0x9f9f, 0x9f9f, 0x9f9f, 0x9f9f, 0x9f9f, 0x9f9f, 0xa79f, 0xa79f, 0xa79f, 0xa79f, 0x9f9f, 0x9f9f, 
@@ -580,14 +586,23 @@ static const short int tall_cat[]  = {
 #define TALL_CAT_HP 40;
 #define TALL_CAT_DMG 4;
 
-int player_money = 0, ENEMY_HP = 1000, PLAYER_HP = 1000;
+#define PROGRESS_BAR_WIDTH 20;
 
-int game_over = 0, winner = -1;
+//keeps track of player money and HP of bases, 
+int player_money = 0, ENEMY_HP = 1000, PLAYER_HP = 1000, can_buy_normal_cat = 0;
 
-	int left_shift = 0; //used to move cats to the left every framea
-	int right_shift = 0; //used to move opponent dogs to the right
+//game over == 1 when there is a winner, if winner == 0 then enemy won, if winner == 1 then player won
+int game_over = 0, winner = -1, draw = 1;
+
+int left_shift = 0; //used to move cats to the left every framea
+int right_shift = 0; //used to move opponent dogs to the right
+
+int cat_ID = 0; //keeps track of each cat in game, id is used to find the position of each cat
+int cat_positions[100][100]; //keeps track of the x position of each cat, "x" is cat_id, "y" is the current x position of cat of cat_id
 
 volatile int pixel_plot; // global variable
+volatile int *HEX_BASE1 = (int *) 0xff200020;
+volatile int *HEX_BASE2 = (int *) 0xff200030;
 
 void plot_pixel(int x, int y, short int line_color)
 {
@@ -596,10 +611,11 @@ void plot_pixel(int x, int y, short int line_color)
     *one_pixel_address = line_color;
 }
 
+//make it so the player gets $25 per second
 int main(void)
 {
 
-    volatile int * pixel_ctrl_ptr = (int *)0xFF203020;
+  volatile int * pixel_ctrl_ptr = (int *)0xFF203020;
 
 	//point to front buffer
     pixel_plot = *pixel_ctrl_ptr;
@@ -614,15 +630,23 @@ int main(void)
   while (true == 1)
   { 
 		vsync();
-		
-    draw_background();
-    
+		if(draw)
+    {
+      draw_background();
+      draw = 0;
+      player_money += 5;
+    }
+  
     draw_normal_cat();
+    player_money++;
     draw_tank_cat();
+    player_money++;
     draw_axe_cat();
+    player_money++;
     draw_ninja_cat();
+    player_money++;
     draw_tall_cat();
-
+    player_money++;
     
     if(slow_down % 4 ==3)
     {
@@ -688,7 +712,7 @@ void draw_axe_cat()
 void draw_ninja_cat()
 {
   int i = 0; 
-	for(int x = 115; x < 140; x++)
+	for(int x = 118; x < 143; x++)
 	{
 	  for(int y = 200+left_shift; y < 225+left_shift; y++)
 		{
@@ -713,16 +737,17 @@ void draw_tall_cat()
 
 void vsync() 
 {
-    volatile int * pixel_ctrl_ptr = (int *) 0xFF203020;
+  volatile int * pixel_ctrl_ptr = (int *) 0xFF203020;
 	//turns on double buff
-    *pixel_ctrl_ptr = 1;
+  *pixel_ctrl_ptr = 1;
 	//if done drawing 
-    int status = *(pixel_ctrl_ptr + 3) & 1;
+  int status = *(pixel_ctrl_ptr + 3) & 1;
 	
-    while (status != 0) 
+  while (status != 0) 
 	{
-        status = *(pixel_ctrl_ptr + 3) & 1;
-    }
+    status = *(pixel_ctrl_ptr + 3) & 1;
+  }
+
 }
 
 void game_complete()
@@ -738,4 +763,40 @@ void game_complete()
 		game_over = 1;
 		winner = 1;
 	}
+}
+
+void buy_normal_cat()
+{
+  if(player_money / 50 >=1)
+  {
+    can_buy_normal_cat = 1;
+  }
+  double money_bar = (double) player_money / 50;
+  int progress_bar = money_bar * PROGRESS_BAR_WIDTH;
+
+  int i = 0; 
+  for(int x = 0; x < progress_bar; x++)
+	{
+	  for(int y = 0; y < 10; y++)
+		{
+			plot_pixel(y, x, 0xFFE0);
+			i++;
+		}
+	}
+}
+
+void disp_money()
+{
+  int money = player_money, temp, shifts = 0;
+  while(money > 0)
+  {
+    temp = hex_disp[money % 10];
+    for(int i = 0; i < shifts; i++)
+    {
+      temp << 7;
+    }
+    *(HEX_BASE1) = temp;
+    money /= 10;
+    shifts++;
+  }
 }
