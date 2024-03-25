@@ -36,14 +36,7 @@ void disp_money_2()
 			*(HEX_BASE1) += hex_disp[(money / 10) % 10] << 8;
 	  		*(HEX_BASE1) += hex_disp[(money / 100) % 10] << 16 ;
 	  	   *(HEX_BASE1) += hex_disp[(money / 1000) % 10]<< 24;
-	 }
-	  
-	
-	
-	
-	
-	  
-	  
+	 }  
   }
 }
 
