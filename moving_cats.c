@@ -838,7 +838,8 @@ static const short int tall_cat[]  = {
 void draw_start_screen();
 
 //keeps track of player money and HP of bases, 
-int player_money = 0, ENEMY_HP = 1000, PLAYER_HP = 1000, can_buy_normal_cat = 0;
+int player_money = 0, ENEMY_HP = 1000, PLAYER_HP = 1000;
+int can_buy_normal_cat = 0, can_buy_tank_cat = 0, can_buy_axe_cat = 0, can_buy_ninja_cat = 0, can_buy_tall_cat = 0;
 
 //game over == 1 when there is a winner, if winner == 0 then enemy won, if winner == 1 then player won
 int game_over = 0, winner = -1, draw = 1;
@@ -848,6 +849,8 @@ int right_shift = 0; //used to move opponent dogs to the right
 
 int cat_ID = 0; //keeps track of each cat in game, id is used to find the position of each cat
 int cat_positions[100][100]; //keeps track of the x position of each cat, "x" is cat_id, "y" is the current x position of cat of cat_id
+int dog_positions[100][100]; //keps track of the x position of each dog
+int enemy_base_location = 30, player_base_location = 300; //keeps track of the x location of the enemy and player bases
 
 volatile int pixel_plot; // global variable
 volatile int *HEX_BASE1 = (int *) 0xff200020;
@@ -1034,6 +1037,86 @@ void buy_normal_cat()
 	}
 }
 
+void buy_tank_cat()
+{
+  if(player_money / 100 >=1)
+  {
+    can_buy_tank_cat = 1;
+  }
+  double money_bar = (double) player_money / 100;
+  int progress_bar = money_bar * PROGRESS_BAR_WIDTH;
+
+  int i = 0; 
+  for(int x = 0; x < progress_bar; x++)
+	{
+	  for(int y = 0; y < 10; y++)
+		{
+			plot_pixel(y, x, 0xFFE0);
+			i++;
+		}
+	}
+}
+
+void buy_axe_cat()
+{
+  if(player_money / 200 >=1)
+  {
+    can_buy_axe_cat = 1;
+  }
+  double money_bar = (double) player_money / 200;
+  int progress_bar = money_bar * PROGRESS_BAR_WIDTH;
+
+  int i = 0; 
+  for(int x = 0; x < progress_bar; x++)
+	{
+	  for(int y = 0; y < 10; y++)
+		{
+			plot_pixel(y, x, 0xFFE0);
+			i++;
+		}
+	}
+}
+
+void buy_ninja_cat()
+{
+  if(player_money / 200 >=1)
+  {
+    can_buy_ninja_cat = 1;
+  }
+  double money_bar = (double) player_money / 200;
+  int progress_bar = money_bar * PROGRESS_BAR_WIDTH;
+
+  int i = 0; 
+  for(int x = 0; x < progress_bar; x++)
+	{
+	  for(int y = 0; y < 10; y++)
+		{
+			plot_pixel(y, x, 0xFFE0);
+			i++;
+		}
+	}
+}
+
+void buy_tall_cat()
+{
+  if(player_money / 400 >=1)
+  {
+    can_buy_tall_cat = 1;
+  }
+  double money_bar = (double) player_money / 400;
+  int progress_bar = money_bar * PROGRESS_BAR_WIDTH;
+
+  int i = 0; 
+  for(int x = 0; x < progress_bar; x++)
+	{
+	  for(int y = 0; y < 10; y++)
+		{
+			plot_pixel(y, x, 0xFFE0);
+			i++;
+		}
+	}
+}
+
 void disp_money()
 {
   int money = player_money, temp, shifts = 0;
@@ -1062,3 +1145,4 @@ void draw_start_screen()
 		}
 	}
 }
+
