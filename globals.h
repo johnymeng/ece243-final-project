@@ -22,6 +22,8 @@ struct dog;
 #define DOG_HP 25;
 #define DOG_DMG 3;
 
+#define BASE_HP_BAR_LENGTH 50;
+
 #define PROGRESS_BAR_WIDTH 20;
 
 extern int player_money = 0, ENEMY_HP = 1000, PLAYER_HP = 1000, can_buy_normal_cat = 0;
