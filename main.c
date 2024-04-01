@@ -858,6 +858,11 @@ int enemy_base_location = 30, player_base_location = 300; //keeps track of the x
 volatile int pixel_plot; // global variable
 volatile int *HEX_BASE1 = (int *) 0xff200020;
 volatile int *HEX_BASE2 = (int *) 0xff200030;
+volatile int* PUSH_BUTTONS = (int *) 0xFF200050;
+volatile int* EDGE_CAP = (int *) 0xFF20005C;
+volatile int* LED_BASE = 0xFF200000;
+
+*(EDGE_CAP) = 0b0000; //clear edge cap
 
 void plot_pixel(int x, int y, short int line_color)
 {

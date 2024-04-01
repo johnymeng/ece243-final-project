@@ -10,13 +10,16 @@
 struct cat;
 struct dog;
 
+#define CAT_START_POS 290;
+#define DOG_START_POS 30;
+
 #define NORMAL_CAT_HP 10;
 #define NORMAL_CAT_DMG 2;
 
-#define TANK_CAT_HP 25;
+#define TANK_CAT_HP 30;
 #define TANK_CAT_DMG 2;
 
-#define AXE_CAT_HP 20;
+#define AXE_CAT_HP 25;
 #define AXE_CAT_DMG 4;
 
 #define TALL_CAT_HP 40;
@@ -24,6 +27,9 @@ struct dog;
 
 #define DOG_HP 25;
 #define DOG_DMG 3;
+
+#define NINJA_CAT_HP 20;
+#define NINJA_CAT_DMG 5;
 
 void plot_pixel(int x, int y, short int line_color);
 
@@ -915,6 +921,11 @@ int enemy_base_location = 30, player_base_location = 300; //keeps track of the x
 volatile int pixel_plot; // global variable
 volatile int *HEX_BASE1 = (int *) 0xff200020;
 volatile int *HEX_BASE2 = (int *) 0xff200030;
+volatile int* PUSH_BUTTONS = (int *) 0xFF200050;
+volatile int* EDGE_CAP = (int *) 0xFF20005C;
+volatile int* LED_BASE = (int *) 0xFF200000;
+
+
 
 /*-----------------------------------HELPER FUNCTIONS-----------------------------------------*/
 
@@ -937,7 +948,14 @@ void new_normal_cat()
 {
     if(player_money >= 50)
     {
-        player_money -= 50;
+      player_money -= 50;
+      cat_tracking[cat_ID].catID = cat_ID;
+      cat_tracking[cat_ID].damage = NORMAL_CAT_DMG;
+      cat_tracking[cat_ID].hp = NORMAL_CAT_HP;
+      cat_tracking[cat_ID].x_position = CAT_START_POS;
+      cat_tracking[cat_ID].type = "normal";
+
+      cat_ID++;
     }
 
     // int catID;
@@ -945,13 +963,7 @@ void new_normal_cat()
     // int hp;
     // int x_position;
 
-    cat_tracking[cat_ID].catID = cat_ID;
-    cat_tracking[cat_ID].damage = NORMAL_CAT_DMG;
-    cat_tracking[cat_ID].hp = NORMAL_CAT_HP;
-    cat_tracking[cat_ID].x_position = 200;
-    cat_tracking[cat_ID].type = "normal";
-
-    cat_ID++;
+    
 }
 
 void new_tank_cat()
@@ -959,62 +971,62 @@ void new_tank_cat()
     if(player_money >= 100)
     {
         player_money -= 100;
+        cat_tracking[cat_ID].catID = cat_ID;
+      cat_tracking[cat_ID].damage = TANK_CAT_DMG;
+      cat_tracking[cat_ID].hp = TANK_CAT_HP;
+      cat_tracking[cat_ID].x_position = CAT_START_POS;
+      cat_tracking[cat_ID].type = "tank";
+
+      cat_ID++;
     }
-
-    // int catID;
-    // int damage;
-    // int hp;
-    // int x_position;
-
-    cat_tracking[cat_ID].catID = cat_ID;
-    cat_tracking[cat_ID].damage = TANK_CAT_DMG;
-    cat_tracking[cat_ID].hp = TANK_CAT_HP;
-    cat_tracking[cat_ID].x_position = 200;
-    cat_tracking[cat_ID].type = "tank";
-
-    cat_ID++;
+    
 }
 
 void new_axe_cat()
 {
     if(player_money >= 200)
     {
-        player_money -= 200;
+      player_money -= 200;
+
+      cat_tracking[cat_ID].catID = cat_ID;
+      cat_tracking[cat_ID].damage = AXE_CAT_DMG;
+      cat_tracking[cat_ID].hp = AXE_CAT_HP;
+      cat_tracking[cat_ID].x_position = CAT_START_POS;
+      cat_tracking[cat_ID].type = "axe";
+
+      cat_ID++; //increments total # of cats
+      
     }
+}
 
-    // int catID;
-    // int damage;
-    // int hp;
-    // int x_position;
+void new_ninja_cat()
+{
+    if(player_money >= 200)
+    {
+      player_money -= 200;
+      cat_tracking[cat_ID].catID = cat_ID;
+      cat_tracking[cat_ID].damage = NINJA_CAT_DMG;
+      cat_tracking[cat_ID].hp = NINJA_CAT_HP;
+      cat_tracking[cat_ID].x_position = CAT_START_POS;
+      cat_tracking[cat_ID].type = "ninja";
 
-    cat_tracking[cat_ID].catID = cat_ID;
-    cat_tracking[cat_ID].damage = AXE_CAT_DMG;
-    cat_tracking[cat_ID].hp = AXE_CAT_HP;
-    cat_tracking[cat_ID].x_position = 200;
-    cat_tracking[cat_ID].type = "axe";
-
-    cat_ID++;
+      cat_ID++;
+    }
 }
 
 void new_tall_cat()
 {
-    if(player_money >= 100)
+    if(player_money >= 400)
     {
-        player_money -= 100;
+      player_money -= 400;
+      cat_tracking[cat_ID].catID = cat_ID;
+      cat_tracking[cat_ID].damage = TALL_CAT_DMG;
+      cat_tracking[cat_ID].hp = TALL_CAT_HP;
+      cat_tracking[cat_ID].x_position = CAT_START_POS;
+      cat_tracking[cat_ID].type = "tall";
+
+      cat_ID++;
     }
-
-    // int catID;
-    // int damage;
-    // int hp;
-    // int x_position;
-
-    cat_tracking[cat_ID].catID = cat_ID;
-    cat_tracking[cat_ID].damage = TALL_CAT_DMG;
-    cat_tracking[cat_ID].hp = TALL_CAT_HP;
-    cat_tracking[cat_ID].x_position = 200;
-    cat_tracking[cat_ID].type = "tall";
-
-    cat_ID++;
 }
 
 typedef struct cat Cat;
@@ -1373,12 +1385,47 @@ void draw_start_screen()
 	}
 }
 
+void read_buttons()
+{
+    int capture = *EDGE_CAP;
+	
+    if((capture & 0b0001)>0)
+    {
+        new_normal_cat();
+        *(PUSH_BUTTONS+3) = 0b0001; //writing 1 to bit clears it 
+		(*LED_BASE) = 0b0001;
+		for(int i = 0; i < 1000000; i++);
+    }
+    if((capture & 0b0010)>0)
+    {
+        new_tank_cat(); 
+        *(PUSH_BUTTONS+3) = 0b0010; //writing 1 to bit clears it 
+		(*LED_BASE) = 0b0010;
+		for(int i = 0; i < 1000000; i++);
+    }
+    if((capture & 0b0100)>0)
+    {
+        new_axe_cat(); 
+        *(PUSH_BUTTONS+3) = 0b0100; //writing 1 to bit clears it 
+		(*LED_BASE) = 0b0100;
+		for(int i = 0; i < 1000000; i++);
+    }
+    if((capture & 0b1000)>0)
+    {
+        new_ninja_cat(); 
+        *(PUSH_BUTTONS+3) = 0b1000; //writing 1 to bit clears it 
+		(*LED_BASE) = 0b1000;
+		for(int i = 0; i < 1000000; i++);
+    }
+	//need to add key for tall cat
+}
+
 
 /*-------------------------------------------------MAIN-----------------------------------------------*/
 //make it so the player gets $25 per second
 int main(void)
 {
-
+  *EDGE_CAP = 0b0000; //resets edge cap
   volatile int * pixel_ctrl_ptr = (int *)0xFF203020;
 
 	//point to front buffer
@@ -1406,6 +1453,8 @@ int main(void)
     //draws hp bar over bases
     draw_cat_base_hp();
     draw_dog_base_hp();
+
+    read_buttons();
 
     //draws "money bar" under each cat
     buy_normal_cat();
