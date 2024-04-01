@@ -1414,7 +1414,7 @@ void draw_start_screen();
 int can_buy_normal_cat = 0, can_buy_tank_cat = 0, can_buy_axe_cat = 0, can_buy_ninja_cat = 0, can_buy_tall_cat = 0;
 
 //timer counter
-int end_screen_ctr = 0, attack_ctr = 0, base_damage_ctr = 0; 
+int end_screen_ctr = 0, attack_ctr = 0, base_damage_ctr = 0, money_ctr = 0;
 
 int cat_positions[100][100]; //keeps track of the x position of each cat, "x" is cat_id, "y" is the current x position of cat of cat_id
 int dog_positions[100][100]; //keps track of the x position of each dog
@@ -1721,6 +1721,7 @@ void read_timer()
         end_screen_ctr++;
         attack_ctr++;
         base_damage_ctr++;
+        money_ctr++;
         *(TIMER) = 0b10; //resets TO bit for timer
     }
 }
@@ -1791,11 +1792,13 @@ void game_complete()
 	{
 		game_over = 1;
 		winner = 0;
+    game_start = 0;
 	}
 	else if(ENEMY_HP <= 0)
 	{
 		game_over = 1;
 		winner = 1;
+    game_start = 0;
 	}
 }
 
@@ -1913,6 +1916,9 @@ void draw_start_screen()
 		}
 	}
   while(!game_start);
+  {
+    read_buttons();
+  }
 }
 
 void draw_win_screen()
@@ -1949,29 +1955,33 @@ void read_buttons()
     {
         new_normal_cat();
         *(PUSH_BUTTONS+3) = 0b0001; //writing 1 to bit clears it 
-		(*LED_BASE) = 0b0001;
-		for(int i = 0; i < 1000000; i++);
+		  (*LED_BASE) = 0b0001;
+      game_start = 1;
+		//for(int i = 0; i < 1000000; i++);
     }
     if((capture & 0b0010)>0)
     {
         new_tank_cat(); 
         *(PUSH_BUTTONS+3) = 0b0010; //writing 1 to bit clears it 
 		(*LED_BASE) = 0b0010;
-		for(int i = 0; i < 1000000; i++);
+		//for(int i = 0; i < 1000000; i++);
+    game_start = 1;
     }
     if((capture & 0b0100)>0)
     {
         new_axe_cat(); 
         *(PUSH_BUTTONS+3) = 0b0100; //writing 1 to bit clears it 
 		(*LED_BASE) = 0b0100;
-		for(int i = 0; i < 1000000; i++);
+		//for(int i = 0; i < 1000000; i++);
+    game_start = 1;
     }
     if((capture & 0b1000)>0)
     {
         new_ninja_cat(); 
         *(PUSH_BUTTONS+3) = 0b1000; //writing 1 to bit clears it 
 		(*LED_BASE) = 0b1000;
-		for(int i = 0; i < 1000000; i++);
+		//for(int i = 0; i < 1000000; i++);
+    game_start = 1;
     }
 	//need to add key for tall cat
 }
@@ -1998,6 +2008,11 @@ void end_screen()
         } 
           //draw_start_screen();
     }
+    if(!game_start)
+    {
+      draw_start_screen();
+    }
+    
 }
 
 void base_damage()
@@ -2017,7 +2032,6 @@ void base_damage()
           }
       }
     }
-    
     game_complete();
 }
 
