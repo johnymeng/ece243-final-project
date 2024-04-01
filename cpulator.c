@@ -2002,7 +2002,7 @@ void end_screen()
 
 void base_damage()
 {
-    if(base_damage_ctr >= 30)
+    if(base_damage_ctr >= 7)
     {
       base_damage_ctr = 0;
       for(int i = 0; i < 100; i++)
