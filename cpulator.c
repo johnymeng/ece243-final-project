@@ -1426,6 +1426,7 @@ volatile int* PUSH_BUTTONS = (int *) 0xFF200050;
 volatile int* EDGE_CAP = (int *) 0xFF20005C;
 volatile int* LED_BASE = (int *) 0xFF200000;
 volatile int* TIMER = (int *) 0xFF202000;
+volatile int* SWITCHES = (int *) 0xFF200040;
 
 /*-----------------------------------HELPER FUNCTIONS-----------------------------------------*/
 
@@ -1437,9 +1438,9 @@ void disp_money()
 	 if(money > 1000)
 	 {	
 		 *(HEX_BASE1) = hex_disp[money % 10] ;
-			(HEX_BASE1) += hex_disp[(money / 10) % 10] << 8;
-	  		*(HEX_BASE1) += hex_disp[(money / 100) % 10] << 16 ;
-	  	   *(HEX_BASE1) += hex_disp[(money / 1000) % 10]<< 24;
+			*(HEX_BASE1) += hex_disp[(money / 10) % 10] << 8;
+	  	*(HEX_BASE1) += hex_disp[(money / 100) % 10] << 16 ;
+	  	*(HEX_BASE1) += hex_disp[(money / 1000) % 10]<< 24;
 	 }  
   }
 }
@@ -1981,10 +1982,31 @@ void draw_start_screen()
 			i++;
 		}
 	}
-  while(!game_start);
+  // while(!game_start);
+  // {
+  //   if(*(SWITCHES) > 0) //check if any values in base register are greater than 0
+  //   {
+  //     game_start = 1;
+  //   }
+  //   if(game_start)
+  //   {
+  //     draw_background();
+  //     return;
+  //   }
+  // }
+  while(!game_start)
   {
-    read_buttons();
+    if(*(SWITCHES) > 0) //check if any values in base register are greater than 0
+    {
+      game_start = 1;
+    }
+    if(game_start)
+    {
+      draw_background();
+      return;
+    }
   }
+  draw_background();
 }
 
 void end_screen()
@@ -2009,17 +2031,12 @@ void end_screen()
         } 
           //draw_start_screen();
     }
-    if(!game_start)
-    {
-      draw_start_screen();
-    }
-    
 }
 
 void base_damage()
 {
-    if(base_damage_ctr >= 7)
-    {
+    // if(base_damage_ctr >= 7)
+    // {
       base_damage_ctr = 0;
       for(int i = 0; i < 100; i++)
       {
@@ -2032,7 +2049,7 @@ void base_damage()
               PLAYER_HP -= dog_tracking[i].damage;
           }
       }
-    }
+    //}
     game_complete();
 }
 
@@ -2057,6 +2074,10 @@ int main(void)
   while (true == 1)
   { 
 		vsync();
+  if(!game_start)
+  {
+    draw_start_screen();
+  }
 	if(draw)
     {
       draw_background();
@@ -2064,7 +2085,7 @@ int main(void)
       player_money += 5;
     }
      //increment_money(&player_money);
-   // disp_money();
+     //disp_money();
 
     //draws hp bar over bases
     draw_cat_base_hp();
