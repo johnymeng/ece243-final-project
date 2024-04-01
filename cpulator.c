@@ -10,7 +10,11 @@
 struct cat;
 struct dog;
 
-#define CAT_START_POS 290;
+int ENEMY_BASE_POS = 40;
+int PLAYER_BASE_POS = 300; //keeps track of the x location of the enemy and player bases
+
+
+#define CAT_START_POS 260;
 #define DOG_START_POS 30;
 
 #define NORMAL_CAT_HP 10;
@@ -916,7 +920,6 @@ int can_buy_normal_cat = 0, can_buy_tank_cat = 0, can_buy_axe_cat = 0, can_buy_n
 
 int cat_positions[100][100]; //keeps track of the x position of each cat, "x" is cat_id, "y" is the current x position of cat of cat_id
 int dog_positions[100][100]; //keps track of the x position of each dog
-int enemy_base_location = 30, player_base_location = 300; //keeps track of the x location of the enemy and player bases
 
 volatile int pixel_plot; // global variable
 volatile int *HEX_BASE1 = (int *) 0xff200020;
@@ -1057,7 +1060,7 @@ void draw_normal_cat(Cat *normal_cat)
         }
     }
     min_cat_pos = min(cur_pos, min_cat_pos);
-    if(cur_pos > 30)
+    if(cur_pos > ENEMY_BASE_POS)
     {
         normal_cat->x_position--;
     }
@@ -1081,7 +1084,7 @@ void draw_tank_cat(Cat *tank_cat)
         }
     }
     min_cat_pos = min(cur_pos, min_cat_pos);
-    if(cur_pos > 30) tank_cat->x_position--;
+    if(cur_pos > ENEMY_BASE_POS) tank_cat->x_position--;
     if(cur_pos < max_dog_pos) 
     {
         tank_cat->x_position++;
@@ -1102,7 +1105,7 @@ void draw_axe_cat(Cat *axe_cat)
         }
 	}
     min_cat_pos = min(cur_pos, min_cat_pos);
-    if(cur_pos > 30) axe_cat->x_position--;
+    if(cur_pos > ENEMY_BASE_POS) axe_cat->x_position--;
     if(cur_pos < max_dog_pos) 
     {
         axe_cat->x_position++;
@@ -1123,7 +1126,7 @@ void draw_ninja_cat(Cat *ninja_cat)
 		}
 	}
     min_cat_pos = min(cur_pos, min_cat_pos);
-    if(cur_pos > 30) ninja_cat->x_position--;
+    if(cur_pos > ENEMY_BASE_POS) ninja_cat->x_position--;
     if(cur_pos < max_dog_pos)
     {
         ninja_cat->x_position++;
@@ -1145,7 +1148,7 @@ void draw_tall_cat(Cat *tall_cat)
 	} 
     min_cat_pos = min(cur_pos, min_cat_pos);
     //stops cats from moving if they reach the base
-    if(cur_pos > 30) tall_cat->x_position--;
+    if(cur_pos > ENEMY_BASE_POS) tall_cat->x_position--;
 
     //stops cat from moving forwards if they encounter a dog
     if(cur_pos < max_dog_pos)
@@ -1184,7 +1187,7 @@ void draw_normal_dog(Dog *normal_dog)
     max_dog_pos = max(max_dog_pos, cur_pos);
     
     //stops dogs from moving if they hit the base
-    if(cur_pos < 200)
+    if(cur_pos < PLAYER_BASE_POS)
     {
         normal_dog->x_position++;
     }
