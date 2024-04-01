@@ -1423,6 +1423,29 @@ void read_buttons()
 	//need to add key for tall cat
 }
 
+void end_screen()
+{
+    while(game_over)
+    {
+        draw_start_screen();
+    }
+}
+
+void base_damage()
+{
+    for(int i = 0; i < 100; i++)
+    {
+        if(cat_tracking[i].x_position == ENEMY_BASE_POS)
+        {
+            ENEMY_HP -= cat_tracking[i].damage;
+        }
+        if(dog_tracking[i].x_position == PLAYER_BASE_POS)
+        {
+            PLAYER_HP -= dog_tracking[i].damage;
+        }
+    }
+    game_complete();
+}
 
 /*-------------------------------------------------MAIN-----------------------------------------------*/
 //make it so the player gets $25 per second
@@ -1465,6 +1488,9 @@ int main(void)
     buy_axe_cat();
     buy_ninja_cat();
     buy_tall_cat();
+
+    base_damage();
+    end_screen();
 
     //searchs through our cat struct array for all cats that have currently been created
     for(int i = 0; i < 100; i++)

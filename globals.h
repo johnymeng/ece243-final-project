@@ -7,6 +7,9 @@
 struct cat;
 struct dog;
 
+int ENEMY_BASE_POS = 40;
+int PLAYER_BASE_POS = 300;
+
 #define NORMAL_CAT_HP 10;
 #define NORMAL_CAT_DMG 2;
 
