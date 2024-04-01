@@ -1733,7 +1733,7 @@ void new_dog()
     dog_tracking[dog_ID].dogID = dog_ID;
     dog_tracking[dog_ID].damage = 3;
     dog_tracking[dog_ID].hp = 20;
-    dog_tracking[dog_ID].x_position = 40;
+    dog_tracking[dog_ID].x_position = 60;
     dog_tracking[dog_ID].type = "normal";
 
     dog_ID++;
@@ -2069,6 +2069,10 @@ void end_screen()
         game_over = 0;
         PLAYER_HP = 1000;
         ENEMY_HP = 1000;
+
+        //clears cat_tracking and dog_tracking vec
+        memset(cat_tracking, 0, sizeof(cat_tracking));
+        memset(dog_tracking, 0, sizeof(dog_tracking));
         return;
       }
         if(winner && !drawn) //if winner == 1, then player won
