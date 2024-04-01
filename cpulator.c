@@ -1904,22 +1904,6 @@ void buy_tall_cat()
     }   
 }
 
-void draw_start_screen()
-{
-  int i = 0;
-  for(int x = 0; x < 240; x++)
-	{
-		for(int y = 0; y < 320; y++)
-		{
-			plot_pixel(y, x, start_screen[i]);
-			i++;
-		}
-	}
-  while(!game_start);
-  {
-    read_buttons();
-  }
-}
 
 void draw_win_screen()
 {
@@ -1984,6 +1968,23 @@ void read_buttons()
     game_start = 1;
     }
 	//need to add key for tall cat
+}
+
+void draw_start_screen()
+{
+  int i = 0;
+  for(int x = 0; x < 240; x++)
+	{
+		for(int y = 0; y < 320; y++)
+		{
+			plot_pixel(y, x, start_screen[i]);
+			i++;
+		}
+	}
+  while(!game_start);
+  {
+    read_buttons();
+  }
 }
 
 void end_screen()
