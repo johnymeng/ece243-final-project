@@ -71,6 +71,9 @@ struct dog
 
 void increment_money(int * money);
 
+
+int game_start = 0; //keeps start screen shown until something is pressed
+
 #define BACKGROUND_HEIGHT 240
 #define BACKGROUND_WIDTH 320
 	
@@ -1411,7 +1414,7 @@ void draw_start_screen();
 int can_buy_normal_cat = 0, can_buy_tank_cat = 0, can_buy_axe_cat = 0, can_buy_ninja_cat = 0, can_buy_tall_cat = 0;
 
 //timer counter
-int end_screen_ctr = 0, attack_ctr = 0;
+int end_screen_ctr = 0, attack_ctr = 0, base_damage_ctr = 0; 
 
 int cat_positions[100][100]; //keeps track of the x position of each cat, "x" is cat_id, "y" is the current x position of cat of cat_id
 int dog_positions[100][100]; //keps track of the x position of each dog
@@ -1693,6 +1696,35 @@ void draw_normal_dog(Dog *normal_dog)
     
 }
 
+void init_timer() //timer is 100MHz
+{
+    //at 0xFF202008, timer holders "count down" value
+    int one_sixtieth = 1666667;
+    *(TIMER + 2) = one_sixtieth; //inits timer to count down 1/60ths of a second
+    *(TIMER + 3) = one_sixtieth >> 16;
+
+    //configures timer to run continuously and turns start on
+    *(TIMER+1) = 0b110;
+
+    //starts timer
+    *(TIMER) = 0b10;
+}
+
+void read_timer()
+{
+    int TO = *(TIMER); //gets value of base address of timer, TO is bit 0 of base
+    if((TO & 0b1) > 0) //checks to see if TO bit is high
+    {
+        //increment "counter" values here, we will set signals to change once they reach a certain value
+        //ig if we want something to happen once every second, we increment the counter here
+        //in the "main" function, once the counter reachs 60, we do some action
+        end_screen_ctr++;
+        attack_ctr++;
+        base_damage_ctr++;
+        *(TIMER) = 0b10; //resets TO bit for timer
+    }
+}
+
 void plot_pixel(int x, int y, short int line_color)
 {
     volatile short int *one_pixel_address;
@@ -1880,6 +1912,7 @@ void draw_start_screen()
 			i++;
 		}
 	}
+  while(!game_start);
 }
 
 void draw_win_screen()
@@ -1969,46 +2002,23 @@ void end_screen()
 
 void base_damage()
 {
-    for(int i = 0; i < 100; i++)
+    if(base_damage_ctr >= 30)
     {
-        if(cat_tracking[i].x_position == ENEMY_BASE_POS)
-        {
-            ENEMY_HP -= cat_tracking[i].damage;
-        }
-        if(dog_tracking[i].x_position == PLAYER_BASE_POS)
-        {
-            PLAYER_HP -= dog_tracking[i].damage;
-        }
+      base_damage_ctr = 0;
+      for(int i = 0; i < 100; i++)
+      {
+          if(cat_tracking[i].x_position == ENEMY_BASE_POS)
+          {
+              ENEMY_HP -= cat_tracking[i].damage;
+          }
+          if(dog_tracking[i].x_position == PLAYER_BASE_POS)
+          {
+              PLAYER_HP -= dog_tracking[i].damage;
+          }
+      }
     }
+    
     game_complete();
-}
-
-void init_timer() //timer is 100MHz
-{
-    //at 0xFF202008, timer holders "count down" value
-    int one_sixtieth = 1666667;
-    *(TIMER + 2) = one_sixtieth; //inits timer to count down 1/60ths of a second
-    *(TIMER + 3) = one_sixtieth >> 16;
-
-    //configures timer to run continuously and turns start on
-    *(TIMER+1) = 0b110;
-
-    //starts timer
-    *(TIMER) = 0b10;
-}
-
-void read_timer()
-{
-    int TO = *(TIMER); //gets value of base address of timer, TO is bit 0 of base
-    if((TO & 0b1) > 0) //checks to see if TO bit is high
-    {
-        //increment "counter" values here, we will set signals to change once they reach a certain value
-        //ig if we want something to happen once every second, we increment the counter here
-        //in the "main" function, once the counter reachs 60, we do some action
-        end_screen_ctr++;
-        attack_ctr++;
-        *(TIMER) = 0b10; //resets TO bit for timer
-    }
 }
 
 /*-------------------------------------------------MAIN-----------------------------------------------*/
