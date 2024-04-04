@@ -59,6 +59,7 @@ struct cat
     int hp;
     int x_position;
     char* type;
+    int alive;
 };
 
 struct dog
@@ -68,6 +69,7 @@ struct dog
     int hp;
     int x_position;
     char* type;
+    int alive;
 };
 
 void increment_money(int * money);
@@ -1424,7 +1426,7 @@ static const short int tall_cat_arr[]  = {
   0xb668, 0xb668, 0xbe69, 0xbe69, 0xbe69, 0xbe6a, 0xb64a, 0xb64b, 0xb62b, 0xb62b, 0xb62b, 0xb62c, 0xb62c, 0xb62c, 0xb62c, 0xbe4c, 0xb62c, 0xb64b, 0xb64b, 0xbe4b, 0xb66a, 0xbe68, 0xb668, 0xb668, 0xb668
 };
 
-int player_money = 400, ENEMY_HP = 1000, PLAYER_HP = 1000;
+int player_money = 0, ENEMY_HP = 1000, PLAYER_HP = 1000;
 
 //game over == 1 when there is a winner, if winner == 0 then enemy won, if winner == 1 then player won
 int game_over = 0, winner = -1, draw = 1;
@@ -1447,7 +1449,9 @@ void draw_start_screen();
 int can_buy_normal_cat = 0, can_buy_tank_cat = 0, can_buy_axe_cat = 0, can_buy_ninja_cat = 0, can_buy_tall_cat = 0;
 
 //timer counter
-int end_screen_ctr = 0, attack_ctr = 0, base_damage_ctr = 0, money_ctr = 0, dog_ctr = 0;
+int end_screen_ctr = 0, attack_ctr = 0, base_damage_ctr = 0, money_ctr = 0;
+
+int dog_ctr = 0;
 
 int cat_positions[100][100]; //keeps track of the x position of each cat, "x" is cat_id, "y" is the current x position of cat of cat_id
 int dog_positions[100][100]; //keps track of the x position of each dog
@@ -1488,16 +1492,9 @@ void new_normal_cat()
       cat_tracking[cat_ID].hp = NORMAL_CAT_HP;
       cat_tracking[cat_ID].x_position = CAT_START_POS;
       cat_tracking[cat_ID].type = "normal";
-
+      cat_tracking[cat_ID].alive = 1;
       cat_ID++;
     }
-
-    // int catID;
-    // int damage;
-    // int hp;
-    // int x_position;
-
-    
 }
 
 
@@ -1505,13 +1502,13 @@ void new_tank_cat()
 {
     if(player_money >= 100)
     {
-        player_money -= 100;
-        cat_tracking[cat_ID].catID = cat_ID;
+      player_money -= 100;
+      cat_tracking[cat_ID].catID = cat_ID;
       cat_tracking[cat_ID].damage = TANK_CAT_DMG;
       cat_tracking[cat_ID].hp = TANK_CAT_HP;
       cat_tracking[cat_ID].x_position = CAT_START_POS;
       cat_tracking[cat_ID].type = "tank";
-
+      cat_tracking[cat_ID].alive = 1;
       cat_ID++;
     }
     
@@ -1528,7 +1525,7 @@ void new_axe_cat()
       cat_tracking[cat_ID].hp = AXE_CAT_HP;
       cat_tracking[cat_ID].x_position = CAT_START_POS;
       cat_tracking[cat_ID].type = "axe";
-
+      cat_tracking[cat_ID].alive = 1;
       cat_ID++; //increments total # of cats
       
     }
@@ -1544,7 +1541,7 @@ void new_ninja_cat()
       cat_tracking[cat_ID].hp = NINJA_CAT_HP;
       cat_tracking[cat_ID].x_position = CAT_START_POS;
       cat_tracking[cat_ID].type = "ninja";
-
+      cat_tracking[cat_ID].alive = 1;
       cat_ID++;
     }
 }
@@ -1559,7 +1556,7 @@ void new_tall_cat()
       cat_tracking[cat_ID].hp = TALL_CAT_HP;
       cat_tracking[cat_ID].x_position = CAT_START_POS;
       cat_tracking[cat_ID].type = "tall";
-
+      cat_tracking[cat_ID].alive = 1;
       cat_ID++;
     }
 }
@@ -1582,7 +1579,7 @@ void draw_background()
 
 void draw_normal_dog(Dog* normal_dog_struct)
 {
-
+  //printf("trying to draw dog\n");
     int cur_pos = normal_dog_struct->x_position;
     int i = 0;
     for(int y = 115; y < 140; y++)
@@ -1596,14 +1593,14 @@ void draw_normal_dog(Dog* normal_dog_struct)
     max_dog_pos = max(max_dog_pos, cur_pos);
     
     //stops dogs from moving if they hit the base
-    if(cur_pos < PLAYER_BASE_POS)
+    if(cur_pos < PLAYER_BASE_POS-35)
     {
         normal_dog_struct->x_position++;
     }
     //stops dogs from moving if they encounter a cat
-    if(cur_pos > min_cat_pos)
+    if(cur_pos > min_cat_pos+25)
     {
-         normal_dog_struct->x_position--;
+         //normal_dog_struct->x_position--;
          //need to find a way to see which cat is the "one with left most position"
          normal_dog_struct->hp -= NORMAL_CAT_DMG;
 
@@ -1628,9 +1625,9 @@ void draw_normal_cat(Cat *normal_cat)
     {
         normal_cat->x_position--;
     }
-    if(cur_pos < max_dog_pos)
+    if(cur_pos < max_dog_pos-25)
     {
-        normal_cat->x_position++;
+        //normal_cat->x_position++;
         normal_cat->hp -= DOG_DMG;
     }
 }
@@ -1723,21 +1720,33 @@ void draw_tall_cat(Cat *tall_cat)
 }
 
 
-
+//debug check: dog ctr func works, only makes new dog if dog_ctr >= 60
 void new_dog()
 {
-  if(dog_ctr >= 60)
+ // printf("cur dog ctr: %d\n", dog_ctr);
+  if(dog_ctr >= 120)
   {
-    dog_ctr = 0;
 
+    dog_ctr = 0;
+  printf("a new dog was created w/ dog id: %d!\n", dog_ID);
     dog_tracking[dog_ID].dogID = dog_ID;
     dog_tracking[dog_ID].damage = 3;
     dog_tracking[dog_ID].hp = 20;
-    dog_tracking[dog_ID].x_position = 60;
+    dog_tracking[dog_ID].x_position = 40;
     dog_tracking[dog_ID].type = "normal";
-
+    printf("new dog type: %s\n", dog_tracking[dog_ID].type);
+    dog_tracking[dog_ID].alive = 1;
+    printf("alvie status: %d\n", dog_tracking[dog_ID].alive);
+    //dog id tracker working
     dog_ID++;
   }
+  //  cat_tracking[cat_ID].catID = cat_ID;
+  //     cat_tracking[cat_ID].damage = NORMAL_CAT_DMG;
+  //     cat_tracking[cat_ID].hp = NORMAL_CAT_HP;
+  //     cat_tracking[cat_ID].x_position = CAT_START_POS;
+  //     cat_tracking[cat_ID].type = "normal";
+  //     cat_tracking[cat_ID].alive = 1;
+  //     cat_ID++;
 }
 
 
@@ -1770,6 +1779,19 @@ void read_timer()
         money_ctr++;
         dog_ctr++;
         *(TIMER) = 0b10; //resets TO bit for timer
+      //   if(dog_ctr >= 60)
+      // {
+      //   dog_ctr = 0;
+      //   //printf("a new dog was created with ID: %d!\n", dog_ID);
+      //   dog_tracking[dog_ID].dogID = dog_ID;
+      //   dog_tracking[dog_ID].damage = 3;
+      //   dog_tracking[dog_ID].hp = 20;
+      //   dog_tracking[dog_ID].x_position = 60;
+      //   dog_tracking[dog_ID].type = "normal";
+      //   dog_tracking[dog_ID].alive = 1;
+      //   //dog id tracker working
+      //   dog_ID++;
+      // }
     }
 }
 
@@ -1807,6 +1829,7 @@ void draw_cat_base_hp()
     int width = (int) (ratio * 50);
     //width = 33;
     int i = 0; 
+    
     for(int y = 40; y < 44; y++)
     {
         for(int x = 310; x > 310-width; x--)
@@ -1815,13 +1838,32 @@ void draw_cat_base_hp()
                 i++;
             }
     }
+    //decreases player hp bar
+    for(int y = 40; y < 44; y++)
+    {
+      for(int x = 260; x < 310-width; x++)
+      {
+        plot_pixel(x, y, 0x0000);
+      }
+    }
 }
 
 void draw_dog_base_hp()
 {
     double ratio = (double) ENEMY_HP / 1000;
+    //printf("ratio: %f\n", ratio);
+    
     int width = (int) (ratio * 50);
+    //printf("width: %d\n", width);
     int i = 0; 
+    //decreases hp bar
+    for(int y = 40; y < 44; y++)
+    {
+      for(int x = 60; x > 10+width; x--)
+      {
+        plot_pixel(x, y, 0x0000);
+      }
+    }
     for(int y = 40; y < 44; y++)
     {
         for(int x = 10; x < 10+width; x++)
@@ -2071,8 +2113,8 @@ void end_screen()
         ENEMY_HP = 1000;
 
         //clears cat_tracking and dog_tracking vec
-        memset(cat_tracking, 0, sizeof(cat_tracking));
-        memset(dog_tracking, 0, sizeof(dog_tracking));
+        memset(cat_tracking, '\0', sizeof(cat_tracking));
+        memset(dog_tracking, '\0', sizeof(dog_tracking));
         return;
       }
         if(winner && !drawn) //if winner == 1, then player won
@@ -2102,13 +2144,25 @@ void base_damage()
           {
               ENEMY_HP -= cat_tracking[i].damage;
           }
-          if(dog_tracking[i].x_position == PLAYER_BASE_POS)
+          if(dog_tracking[i].x_position == PLAYER_BASE_POS-35)
           {
               PLAYER_HP -= dog_tracking[i].damage;
           }
       }
     //}
     game_complete();
+}
+//need to correctly update min_cat_pos and max_dog_pos when they die
+//loop through each array to find the min? rather than setting it manually 
+//or can make it change when they die, need to delete all data and update min_pos
+
+void init_dead()
+{
+  for(int i = 0; i < 100; i++)
+  {
+    dog_tracking[i].alive = 0;
+    cat_tracking[i].alive = 0;
+  }
 }
 void draw_normal_dog(Dog *dog);
 /*-------------------------------------------------MAIN-----------------------------------------------*/
@@ -2126,12 +2180,21 @@ int main(void)
     pixel_plot = *(pixel_ctrl_ptr + 1); // we draw on the back buffer
 	int true = 1, slow_down = 0; //slow down reduces speed of walking 
 	//by only incrementing left_shift once every 3 iterations
-	vsync();
+  read_timer();
+	//vsync();
+
+  read_timer();
 	int i = 0;
       //player_money = 800;
   while (true == 1)
   { 
 		vsync();
+    if(i % 4 == 0)
+    {
+      player_money++;
+    }
+      
+  //printf("current money: %d\n", player_money);
   if(!game_start)
   {
     draw_start_screen();
@@ -2140,7 +2203,7 @@ int main(void)
     {
       draw_background();
       draw = 0;
-      player_money += 5;
+     // player_money += 5;
     }
      //increment_money(&player_money);
      //disp_money();
@@ -2157,34 +2220,55 @@ int main(void)
     buy_axe_cat();
     buy_ninja_cat();
     buy_tall_cat();
-
-    base_damage();
+    read_timer();
+    printf("max dog: %d\n", max_dog_pos);
+    printf("min cat: %d\n", min_cat_pos);
+    if(slow_down%5 == 0)
+    {
+      base_damage();
+    }
+    
     end_screen();
     new_dog();
     //searchs through our cat struct array for all cats that have currently been created
     for(int i = 0; i < 100; i++)
     {
-      if(strcmp(dog_tracking[i].type, "normal"))
+     // int val = strcmp(dog_tracking[i].type, "normal") && (dog_tracking[i].alive == 1);
+    //  printf("dog type for ID: %d =  %s\n", i, dog_tracking[i].type);
+      //if(strcmp(dog_tracking[i].type, "normal") && (dog_tracking[i].alive == 1))
+      if((dog_tracking[i].alive == 1))
       {
+       // printf("if statement: %d\n", val);
+        //printf("this returned true!\n");
+    //     int cur_pos = dog_tracking[i].x_position;
+    //     int i = 0;
+    //     for(int y = 115; y < 140; y++)
+    //     {
+    //     for(int x = cur_pos; x < cur_pos+25; x++)
+    //     {
+    //         plot_pixel(x, y, normal_dog[i]);
+    //         i++;
+    //     }
+    // }
         draw_normal_dog(&dog_tracking[i]);
       }
-      if(strcmp(cat_tracking[i].type, "normal"))
+      if(strcmp(cat_tracking[i].type, "normal") && (cat_tracking[i].alive == 1))
       {
         draw_normal_cat(&cat_tracking[i]);
       }
-      else if(strcmp(cat_tracking[i].type, "tank"))
+      else if(strcmp(cat_tracking[i].type, "tank") && (cat_tracking[i].alive == 1))
       {
         draw_tank_cat(&cat_tracking[i]);
       }
-      else if(strcmp(cat_tracking[i].type, "axe"))
+      else if(strcmp(cat_tracking[i].type, "axe") && (cat_tracking[i].alive == 1))
       {
         draw_axe_cat(&cat_tracking[i]);
       }
-      else if(strcmp(cat_tracking[i].type, "ninja"))
+      else if(strcmp(cat_tracking[i].type, "ninja") && (cat_tracking[i].alive == 1))
       {
         draw_ninja_cat(&cat_tracking[i]);
       }
-      else if(strcmp(cat_tracking[i].type, "tall"))
+      else if(strcmp(cat_tracking[i].type, "tall") && (cat_tracking[i].alive == 1))
       {
         draw_tall_cat(&cat_tracking[i]);
       }
