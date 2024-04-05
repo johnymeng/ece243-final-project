@@ -1426,6 +1426,38 @@ static const short int tall_cat_arr[]  = {
   0xb668, 0xb668, 0xbe69, 0xbe69, 0xbe69, 0xbe6a, 0xb64a, 0xb64b, 0xb62b, 0xb62b, 0xb62b, 0xb62c, 0xb62c, 0xb62c, 0xb62c, 0xbe4c, 0xb62c, 0xb64b, 0xb64b, 0xbe4b, 0xb66a, 0xbe68, 0xb668, 0xb668, 0xb668
 };
 
+#define DEAD_HEIGHT 25
+#define DEAD_WIDTH 20
+
+// array size is 1000
+static const short int dead[]  = {
+  0xbfdf, 0xb77f, 0xb79f, 0xbf9f, 0xb75e, 0xcfdf, 0xc77e, 0xcfbf, 0xcf9f, 0xd79f, 0xdfdf, 0xcf7e, 0xdfbf, 0xcf7e, 0xdfbf, 0xd79f, 0xd7df, 0xcf9e, 0xcfbf, 0xd7df, 
+  0xbf9f, 0xb77e, 0xbf9f, 0xc7df, 0xc7bf, 0xbf5e, 0xaebb, 0x95d8, 0x8d96, 0x8d76, 0x8d56, 0x9597, 0xa5f8, 0xc6fc, 0xcf5d, 0xd79f, 0xd79e, 0xdfff, 0xdfff, 0xd7bf, 
+  0xc7bf, 0xcfdf, 0xc77e, 0xc77e, 0xa65a, 0x5bf0, 0x6c52, 0x9dd8, 0xc6fc, 0xbebb, 0xc6dc, 0xc6bb, 0x7472, 0x8d35, 0x7451, 0xcf3d, 0xd79e, 0xdfdf, 0xcf7e, 0xdfff, 
+  0xd79f, 0xcf7e, 0xbedc, 0xa5f8, 0x8d35, 0x4b2d, 0x7c93, 0x9d76, 0x8d14, 0x8cd3, 0x9535, 0x9d55, 0x9d76, 0x5b6e, 0x7451, 0xae39, 0xae18, 0xbedb, 0xe7ff, 0xdfbf, 
+  0xe7df, 0xa5f8, 0x42ab, 0x9555, 0x7411, 0x7c51, 0xc67a, 0xadd7, 0x9d14, 0x8c92, 0x8cb3, 0x9d55, 0xbe79, 0xd71c, 0x6bcf, 0x6bef, 0x8cf4, 0x4aec, 0xa5d8, 0xdf9e, 
+  0xdf5d, 0x3a29, 0xf7ff, 0xf7ff, 0xefdf, 0xad76, 0x8451, 0xffff, 0xf7df, 0xe73d, 0xce9a, 0xe77d, 0xf7df, 0x6baf, 0xbe59, 0xf7ff, 0xf7ff, 0xefbf, 0x4acc, 0xefdf, 
+  0xd71c, 0x5b4d, 0xb618, 0xe75d, 0xffff, 0xef9e, 0x8c72, 0xbdf7, 0xbdf8, 0x8431, 0x5aeb, 0x8c71, 0xa555, 0x9d14, 0xdf1c, 0xffff, 0xd71c, 0xc65a, 0x6bcf, 0xe77e, 
+  0xefdf, 0xbe59, 0x7c10, 0x8c92, 0xadb6, 0xce7a, 0x9cf3, 0x39e7, 0x9492, 0xe71c, 0xffff, 0xa535, 0x4a8a, 0x9cf4, 0xceba, 0xbe18, 0x7c10, 0x73f0, 0xc659, 0xefbf, 
+  0xe7df, 0xefff, 0xe79e, 0x6bcf, 0x636d, 0x6b8e, 0x630c, 0xd69a, 0xffdf, 0xbdb7, 0xb576, 0xef3d, 0xc659, 0x630d, 0x73cf, 0x6b6e, 0x7c10, 0xe75d, 0xffff, 0xf7ff, 
+  0xe7de, 0xe7ff, 0xefff, 0xf7ff, 0xefbe, 0xad96, 0x6b6e, 0xffff, 0xad76, 0x630d, 0x736e, 0x7baf, 0xdefc, 0x7c10, 0xb5d7, 0xffff, 0xf7df, 0xffff, 0xefbe, 0xf7df, 
+  0xe7ff, 0xdfdf, 0xdfbe, 0xefff, 0xefff, 0xb618, 0x73ef, 0xffff, 0xad76, 0x9493, 0xd69b, 0x9cd3, 0xdefc, 0x8c72, 0xdf3d, 0xf7df, 0xffff, 0xf7ff, 0xf7df, 0xf7ff, 
+  0xdfff, 0xdfdf, 0xefff, 0xe7ff, 0xefdf, 0xb638, 0x6bcf, 0xffff, 0xbe18, 0x7bcf, 0xa555, 0xc659, 0xa535, 0x94f4, 0xe75d, 0xf7ff, 0xf7df, 0xf7df, 0xf7ff, 0xf7ff, 
+  0xdfff, 0xe7ff, 0xdfdf, 0xe7ff, 0xefdf, 0xc69a, 0x6bcf, 0xce9a, 0xffff, 0x94d3, 0x5aec, 0x8451, 0x94f4, 0xd6fc, 0xf7df, 0xf7ff, 0xffff, 0xf7ff, 0xf7ff, 0xefdf, 
+  0xdfdf, 0xe7ff, 0xe7ff, 0xe7df, 0xefff, 0xefbe, 0xb5d7, 0x8451, 0xc659, 0xdefc, 0x8c92, 0xbdf8, 0xf7ff, 0xefbf, 0xf7ff, 0xefff, 0xefbe, 0xf7ff, 0xf7ff, 0xf7ff, 
+  0xe7ff, 0xdfbe, 0xefff, 0xefdf, 0xefdf, 0xefbf, 0xf7ff, 0xb5b7, 0x8431, 0xce7a, 0x8471, 0xbe38, 0xf7ff, 0xf7ff, 0xf7ff, 0xefff, 0xf7ff, 0xffff, 0xf7ff, 0xf7ff, 
+  0xefff, 0xefff, 0xe7df, 0xefdf, 0xefff, 0xf7df, 0xf7df, 0xef9e, 0x94b3, 0x9d14, 0xa555, 0xa576, 0xf7ff, 0xefff, 0xe7de, 0xefff, 0xefff, 0xf7df, 0xf7ff, 0xffff, 
+  0xf7ff, 0xefff, 0xefdf, 0xefdf, 0xefdf, 0xf7df, 0xf7df, 0xf7df, 0xad75, 0x7bcf, 0xa555, 0xceba, 0xf7ff, 0xefff, 0xe7be, 0xe7df, 0xefdf, 0xf7df, 0xf7ff, 0xf7ff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xefff, 0xefff, 0xf7ff, 0xf7ff, 0xf7ff, 0xa555, 0x8c51, 0x9cf4, 0xbe18, 0xf7ff, 0xefdf, 0xe7df, 0xe7ff, 0xefdf, 0xefdf, 0xf7ff, 0xf7ff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xad96, 0x9cf4, 0x94d3, 0xad76, 0xf7ff, 0xefdf, 0xe7ff, 0xe7ff, 0xefdf, 0xefdf, 0xefff, 0xf7ff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xb5d7, 0x9cf4, 0x9cf4, 0xad96, 0xf7ff, 0xefff, 0xe7ff, 0xe7df, 0xefdf, 0xefdf, 0xefdf, 0xefdf, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xb5b6, 0x7c10, 0xa555, 0xc679, 0xf7ff, 0xefff, 0xefff, 0xe7df, 0xefff, 0xefff, 0xefff, 0xefdf, 
+  0xefff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xa555, 0x5aec, 0xad76, 0xe77d, 0xf7ff, 0xefff, 0xefff, 0xefff, 0xefff, 0xefff, 0xefff, 0xefff, 
+  0xefff, 0xefff, 0xefff, 0xefff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xb5b7, 0x4a8a, 0xa576, 0xffff, 0xf7df, 0xefff, 0xefff, 0xefff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 
+  0xefff, 0xefdf, 0xefdf, 0xefff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xce7a, 0x52ab, 0xa555, 0xffff, 0xefdf, 0xf7ff, 0xf7ff, 0xefdf, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 
+  0xefff, 0xefdf, 0xefdf, 0xefff, 0xf7ff, 0xffff, 0xffff, 0xf7ff, 0xef7e, 0xce9a, 0xdf3d, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff
+};
+
 int player_money = 0, ENEMY_HP = 1000, PLAYER_HP = 1000;
 
 //game over == 1 when there is a winner, if winner == 0 then enemy won, if winner == 1 then player won
@@ -1598,13 +1630,32 @@ void draw_normal_dog(Dog* normal_dog_struct)
         normal_dog_struct->x_position++;
     }
     //stops dogs from moving if they encounter a cat
-    if(cur_pos > min_cat_pos+25)
+    if(cur_pos > min_cat_pos-25)
     {
-         //normal_dog_struct->x_position--;
+         normal_dog_struct->x_position--;
          //need to find a way to see which cat is the "one with left most position"
          normal_dog_struct->hp -= NORMAL_CAT_DMG;
-
     } 
+
+    //checks to see if dog is alive or dead
+    if(normal_dog_struct->hp <= 0)
+    {
+      normal_dog_struct->alive = 0;
+      printf("dog with id: %d died\n", normal_dog_struct->dogID);
+      //deletes the dog that died from our tracking array
+      for(int i = normal_dog_struct->dogID; i < 99; i++)
+      {
+        dog_tracking[i] = dog_tracking[i+1];
+      }
+      //resets max_dog_pos
+      max_dog_pos = 0;
+      for(int i = 0; i < dog_ID; i++)
+      {
+        max_dog_pos = max(max_dog_pos, dog_tracking[i].x_position);
+      }
+      printf("cur max pos: %d\n", max_dog_pos);
+      printf("cur min pos: %d\n", min_cat_pos);
+    }
 }
 
 
@@ -1625,10 +1676,30 @@ void draw_normal_cat(Cat *normal_cat)
     {
         normal_cat->x_position--;
     }
-    if(cur_pos < max_dog_pos-25)
+    if(cur_pos < max_dog_pos+25)
     {
-        //normal_cat->x_position++;
+        normal_cat->x_position++;
         normal_cat->hp -= DOG_DMG;
+    }
+    if(normal_cat->hp <= 0)
+    {
+      normal_cat->alive = 0;
+      
+      printf("cat with id: %d died\n", normal_cat->catID);
+
+      //deletes the cat that died from our tracking array
+      for(int i = normal_cat->catID; i < 99; i++)
+      {
+        cat_tracking[i] = cat_tracking[i+1];
+      }
+      //resets min_cat_pos
+      min_cat_pos = 500;
+      for(int i = 0; i < cat_ID; i++)
+      {
+        min_cat_pos = max(min_cat_pos, cat_tracking[i].x_position);
+      }
+      printf("cur max pos: %d\n", max_dog_pos);
+      printf("new min pos: %d\n", min_cat_pos);
     }
 }
 
@@ -1646,10 +1717,28 @@ void draw_tank_cat(Cat *tank_cat)
     }
     min_cat_pos = min(cur_pos, min_cat_pos);
     if(cur_pos > ENEMY_BASE_POS) tank_cat->x_position--;
-    if(cur_pos < max_dog_pos) 
+    if(cur_pos < max_dog_pos+25) 
     {
         tank_cat->x_position++;
         tank_cat->hp -= DOG_DMG;
+    }
+    if(tank_cat->hp <= 0)
+    {
+      tank_cat->alive = 0;
+      printf("cat with id: %d died\n", tank_cat->catID);
+
+      //deletes the cat that died from our tracking array
+      for(int i = tank_cat->catID; i < 99; i++)
+      {
+        cat_tracking[i] = cat_tracking[i+1];
+      }
+      //resets min_cat_pos
+      min_cat_pos = 500;
+      for(int i = 0; i < cat_ID; i++)
+      {
+        min_cat_pos = max(min_cat_pos, cat_tracking[i].x_position);
+      }
+      printf("new min pos: %d\n", min_cat_pos);
     }
 }
 
@@ -1667,10 +1756,28 @@ void draw_axe_cat(Cat *axe_cat)
 	}
     min_cat_pos = min(cur_pos, min_cat_pos);
     if(cur_pos > ENEMY_BASE_POS) axe_cat->x_position--;
-    if(cur_pos < max_dog_pos) 
+    if(cur_pos < max_dog_pos+25) 
     {
         axe_cat->x_position++;
         axe_cat->hp -= DOG_DMG;
+    }
+    if(axe_cat->hp <= 0)
+    {
+      axe_cat->alive = 0;
+      printf("cat with id: %d died\n", axe_cat->catID);
+
+      //deletes the cat that died from our tracking array
+      for(int i = axe_cat->catID; i < 99; i++)
+      {
+        cat_tracking[i] = cat_tracking[i+1];
+      }
+      //resets min_cat_pos
+      min_cat_pos = 500;
+      for(int i = 0; i < cat_ID; i++)
+      {
+        min_cat_pos = max(min_cat_pos, cat_tracking[i].x_position);
+      }
+      printf("new min pos: %d\n", min_cat_pos);
     }
 }
 
@@ -1688,11 +1795,29 @@ void draw_ninja_cat(Cat *ninja_cat)
 	}
     min_cat_pos = min(cur_pos, min_cat_pos);
     if(cur_pos > ENEMY_BASE_POS) ninja_cat->x_position--;
-    if(cur_pos < max_dog_pos)
+    if(cur_pos < max_dog_pos+25)
     {
         ninja_cat->x_position++;
         ninja_cat->hp -= DOG_DMG;
     } 
+    if(ninja_cat->hp <= 0)
+    {
+      ninja_cat->alive = 0;
+      printf("cat with id: %d died\n", ninja_cat->catID);
+
+      //deletes the cat that died from our tracking array
+      for(int i = ninja_cat->catID; i < 99; i++)
+      {
+        cat_tracking[i] = cat_tracking[i+1];
+      }
+      //resets min_cat_pos
+      min_cat_pos = 500;
+      for(int i = 0; i < cat_ID; i++)
+      {
+        min_cat_pos = max(min_cat_pos, cat_tracking[i].x_position);
+      }
+      printf("new min pos: %d\n", min_cat_pos);
+    }
 }
 
 void draw_tall_cat(Cat *tall_cat)
@@ -1712,19 +1837,38 @@ void draw_tall_cat(Cat *tall_cat)
     if(cur_pos > ENEMY_BASE_POS) tall_cat->x_position--;
 
     //stops cat from moving forwards if they encounter a dog
-    if(cur_pos < max_dog_pos)
+    if(cur_pos < max_dog_pos+25)
     {
         tall_cat->x_position++;
         tall_cat->hp -= DOG_DMG;
     } 
+    if(tall_cat->hp <= 0)
+    {
+      tall_cat->alive = 0;
+      printf("cat with id: %d died\n", tall_cat->catID);
+
+      //deletes the cat that died from our tracking array
+      for(int i = tall_cat->catID; i < 99; i++)
+      {
+        cat_tracking[i] = cat_tracking[i+1];
+      }
+      //resets min_cat_pos
+      min_cat_pos = 500;
+      for(int i = 0; i < cat_ID; i++)
+      {
+        min_cat_pos = max(min_cat_pos, cat_tracking[i].x_position);
+      }
+      printf("new min pos: %d\n", min_cat_pos);
+    }
 }
+
 
 
 //debug check: dog ctr func works, only makes new dog if dog_ctr >= 60
 void new_dog()
 {
  // printf("cur dog ctr: %d\n", dog_ctr);
-  if(dog_ctr >= 120)
+  if(dog_ctr >= 300)
   {
 
     dog_ctr = 0;
@@ -2221,8 +2365,8 @@ int main(void)
     buy_ninja_cat();
     buy_tall_cat();
     read_timer();
-    printf("max dog: %d\n", max_dog_pos);
-    printf("min cat: %d\n", min_cat_pos);
+    // printf("max dog: %d\n", max_dog_pos);
+    // printf("min cat: %d\n", min_cat_pos);
     if(slow_down%5 == 0)
     {
       base_damage();
