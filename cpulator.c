@@ -1242,6 +1242,38 @@ static const short int normal_cat_arr[] = {
   0xb669, 0xb649, 0xae09, 0xade9, 0xadca, 0xa5a9, 0x9d69, 0x9d6a, 0x9d6a, 0xa56a, 0xa58a, 0xa58b, 0xa58b, 0xa58b, 0xa58b, 0xa58b, 0xa58b, 0xa58b, 0xa5ab, 0xadab, 0xadca, 0xadca, 0xade9, 0xb629, 0xbe69
 };
 
+#define REPLACE_TANK_CAT_HEIGHT 25
+#define REPLACE_TANK_CAT_WIDTH 25
+
+// array size is 1250
+static const short int replace_tank_cat[]  = {
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xefff, 0xefdf, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7df, 0xf7ff, 0xf7ff, 0xefdf, 0xefff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xefff, 0xefff, 0xf7df, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7df, 0xf7ff, 0xf7ff, 0xefdf, 0xf7ff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xefff, 0xf7ff, 
+  0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xefff, 0xefff, 
+  0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xefff, 0xefff, 
+  0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7df, 0xf7df, 0xf7df, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xefdf, 0xefdf, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7df, 0xf7df, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 
+  0xefff, 0xefff, 0xefdf, 0xefdf, 0xf7df, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7df, 0xefff, 0xefdf, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 
+  0xefff, 0xefff, 0xefdf, 0xefdf, 0xefdf, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7df, 0xefdf, 0xefdf, 0xefdf, 0xefdf, 0xf7ff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xf7ff, 
+  0xf7ff, 0xefff, 0xefdf, 0xefdf, 0xefdf, 0xf7ff, 0xf7ff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7ff, 0xefdf, 0xefdf, 0xefdf, 0xf7df, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xf7ff, 0xf7ff, 0xf7df, 0xf7df, 0xf7df, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xf7ff, 0xf7ff, 0xf7ff, 0xf7df, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xf7ff, 0xf7df, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xffff, 0xffff, 0xffff, 0xf7df, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xffff, 0xffff, 0xffff, 0xf7df, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7df, 0xf7df, 0xf7df, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7ff, 0xf7ff, 0xffff, 0xf7df, 0xf7df, 0xffff, 0xffff, 0xffff, 0xffff, 
+  0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7ff, 0xf7ff, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 
+  0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7bf, 0xf7bf, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7bf, 0xf7bf, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 
+  0xf7bf, 0xf7bf, 0xf7df, 0xf7df, 0xf7df, 0xf7bf, 0xf7bf, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7bf, 0xf7bf, 0xf7bf, 0xf7bf, 0xf7df, 0xf7df, 0xf7df, 
+  0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7bf, 0xf7bf, 0xf7bf, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7df, 0xf7bf, 0xf7bf, 0xf7df, 0xf7df, 0xf7bf, 0xf7bf, 0xf7df
+};
+
 #define TANK_CAT_HEIGHT 40
 #define TANK_CAT_WIDTH 25
 
@@ -1483,7 +1515,7 @@ int can_buy_normal_cat = 0, can_buy_tank_cat = 0, can_buy_axe_cat = 0, can_buy_n
 //timer counter
 int end_screen_ctr = 0, attack_ctr = 0, base_damage_ctr = 0, money_ctr = 0;
 
-int dog_ctr = 0;
+int dog_ctr = 0, max_cat_ID = 0, min_dog_ID = 0;
 
 int cat_positions[100][100]; //keeps track of the x position of each cat, "x" is cat_id, "y" is the current x position of cat of cat_id
 int dog_positions[100][100]; //keps track of the x position of each dog
@@ -1497,6 +1529,16 @@ volatile int* LED_BASE = (int *) 0xFF200000;
 volatile int* TIMER = (int *) 0xFF202000;
 volatile int* SWITCHES = (int *) 0xFF200040;
 
+
+int my_strcmp(char* a, char* b)
+{
+  if(sizeof(a) != sizeof(b)) return 0;
+  for(int i = 0; i < sizeof(a); i++)
+  {
+    if(a[i] != b[i]) return 0;
+  }
+  return 1;
+}
 /*-----------------------------------HELPER FUNCTIONS-----------------------------------------*/
 
 void disp_money()
@@ -1555,7 +1597,7 @@ void new_axe_cat()
       cat_tracking[cat_ID].catID = cat_ID;
       cat_tracking[cat_ID].damage = AXE_CAT_DMG;
       cat_tracking[cat_ID].hp = AXE_CAT_HP;
-      cat_tracking[cat_ID].x_position = CAT_START_POS;
+      cat_tracking[cat_ID].x_position = 254;
       cat_tracking[cat_ID].type = "axe";
       cat_tracking[cat_ID].alive = 1;
       cat_ID++; //increments total # of cats
@@ -1571,7 +1613,7 @@ void new_ninja_cat()
       cat_tracking[cat_ID].catID = cat_ID;
       cat_tracking[cat_ID].damage = NINJA_CAT_DMG;
       cat_tracking[cat_ID].hp = NINJA_CAT_HP;
-      cat_tracking[cat_ID].x_position = CAT_START_POS;
+      cat_tracking[cat_ID].x_position = 262;
       cat_tracking[cat_ID].type = "ninja";
       cat_tracking[cat_ID].alive = 1;
       cat_ID++;
@@ -1715,6 +1757,14 @@ void draw_tank_cat(Cat *tank_cat)
             i++;
         }
     }
+    for(int y = 140; y < 142; y++)
+    {
+        for(int x = cur_pos; x < cur_pos+25; x++)
+        {
+            plot_pixel(x, y, 0xBE89);
+            i++;
+        }
+    }
     min_cat_pos = min(cur_pos, min_cat_pos);
     if(cur_pos > ENEMY_BASE_POS) tank_cat->x_position--;
     if(cur_pos < max_dog_pos+25) 
@@ -1722,15 +1772,26 @@ void draw_tank_cat(Cat *tank_cat)
         tank_cat->x_position++;
         tank_cat->hp -= DOG_DMG;
     }
+    
     if(tank_cat->hp <= 0)
     {
       tank_cat->alive = 0;
       printf("cat with id: %d died\n", tank_cat->catID);
-
       //deletes the cat that died from our tracking array
       for(int i = tank_cat->catID; i < 99; i++)
       {
         cat_tracking[i] = cat_tracking[i+1];
+      }
+
+      //covers the head that is left when a cat dies
+      i = 0;
+      for(int y = 100; y <120; y++)
+      {
+        for(int x = cur_pos; x < cur_pos+25; x++)
+        {
+            plot_pixel(x, y, replace_tank_cat[i]);
+            i++;
+        }
       }
       //resets min_cat_pos
       min_cat_pos = 500;
@@ -1753,7 +1814,16 @@ void draw_axe_cat(Cat *axe_cat)
             plot_pixel(x, y, axe_cat_arr[i]);
             i++;
         }
-	}
+	  }
+    
+    //fixes the trails left behind by certain cats
+    for(int y = 125; y < 140; y++)
+    {
+      for(int x = cur_pos+35; x < cur_pos+36; x++)
+      {
+        plot_pixel(x, y, 0xBE89);
+      }
+    }
     min_cat_pos = min(cur_pos, min_cat_pos);
     if(cur_pos > ENEMY_BASE_POS) axe_cat->x_position--;
     if(cur_pos < max_dog_pos+25) 
@@ -1793,15 +1863,29 @@ void draw_ninja_cat(Cat *ninja_cat)
 			i++;
 		}
 	}
+  for(int y = 124; y < 128; y++)
+    {
+      for(int x = cur_pos+25; x < cur_pos+26; x++)
+      {
+        plot_pixel(x, y, 0xBE89);
+      }
+    }
     min_cat_pos = min(cur_pos, min_cat_pos);
+    if(cur_pos == min_cat_pos)
+    {
+      max_cat_ID = ninja_cat->catID;
+    }
+
     if(cur_pos > ENEMY_BASE_POS) ninja_cat->x_position--;
     if(cur_pos < max_dog_pos+25)
     {
         ninja_cat->x_position++;
         ninja_cat->hp -= DOG_DMG;
+        printf("ninja cat hp: %d\n", ninja_cat->hp);
     } 
     if(ninja_cat->hp <= 0)
     {
+      max_cat_ID++;
       ninja_cat->alive = 0;
       printf("cat with id: %d died\n", ninja_cat->catID);
 
@@ -1815,6 +1899,14 @@ void draw_ninja_cat(Cat *ninja_cat)
       for(int i = 0; i < cat_ID; i++)
       {
         min_cat_pos = max(min_cat_pos, cat_tracking[i].x_position);
+      }
+      //trys to remove feet thing at bottom when cat dies
+      for(int y = 140; y < 143; y++)
+      {
+        for(int x = cur_pos; x < cur_pos+25; x++)
+        {
+          plot_pixel(x, y, 0xBE89);
+        }
       }
       printf("new min pos: %d\n", min_cat_pos);
     }
@@ -2167,13 +2259,14 @@ void draw_lose_screen()
 void read_buttons()
 {
     int capture = *EDGE_CAP;
-	
+   // printf("key that was pressed: %d\n", capture);
     if((capture & 0b0001)>0)
     {
         new_normal_cat();
         *(PUSH_BUTTONS+3) = 0b0001; //writing 1 to bit clears it 
 		  (*LED_BASE) = 0b0001;
       game_start = 1;
+      printf("key that was pressed normal: %d\n", capture);
 		//for(int i = 0; i < 1000000; i++);
     }
     if((capture & 0b0010)>0)
@@ -2181,12 +2274,15 @@ void read_buttons()
         new_tank_cat(); 
         *(PUSH_BUTTONS+3) = 0b0010; //writing 1 to bit clears it 
 		(*LED_BASE) = 0b0010;
+    printf("key that was pressed tank: %d\n", capture);
 		//for(int i = 0; i < 1000000; i++);
     game_start = 1;
     }
     if((capture & 0b0100)>0)
     {
         new_axe_cat(); 
+        printf("axe cat pressed!\n");
+
         *(PUSH_BUTTONS+3) = 0b0100; //writing 1 to bit clears it 
 		(*LED_BASE) = 0b0100;
 		//for(int i = 0; i < 1000000; i++);
@@ -2197,6 +2293,7 @@ void read_buttons()
         new_ninja_cat(); 
         *(PUSH_BUTTONS+3) = 0b1000; //writing 1 to bit clears it 
 		(*LED_BASE) = 0b1000;
+    printf("key that was pressed ninja: %d\n", capture);
 		//for(int i = 0; i < 1000000; i++);
     game_start = 1;
     }
@@ -2255,6 +2352,8 @@ void end_screen()
         game_over = 0;
         PLAYER_HP = 1000;
         ENEMY_HP = 1000;
+        min_cat_pos = 500;
+        max_dog_pos = -1;
 
         //clears cat_tracking and dog_tracking vec
         memset(cat_tracking, '\0', sizeof(cat_tracking));
@@ -2396,23 +2495,27 @@ int main(void)
     // }
         draw_normal_dog(&dog_tracking[i]);
       }
-      if(strcmp(cat_tracking[i].type, "normal") && (cat_tracking[i].alive == 1))
+      if(my_strcmp(cat_tracking[i].type, "normal") && (cat_tracking[i].alive == 1))
       {
         draw_normal_cat(&cat_tracking[i]);
+       // printf("normal cat drawn!\n");
       }
-      else if(strcmp(cat_tracking[i].type, "tank") && (cat_tracking[i].alive == 1))
+      else if(my_strcmp(cat_tracking[i].type, "tank") && (cat_tracking[i].alive == 1))
       {
         draw_tank_cat(&cat_tracking[i]);
+       // printf("normal tank drawn!\n");
       }
-      else if(strcmp(cat_tracking[i].type, "axe") && (cat_tracking[i].alive == 1))
+      else if(my_strcmp(cat_tracking[i].type, "axe") && (cat_tracking[i].alive == 1))
       {
         draw_axe_cat(&cat_tracking[i]);
+       // printf("normal axe drawn!\n");
       }
-      else if(strcmp(cat_tracking[i].type, "ninja") && (cat_tracking[i].alive == 1))
+      else if(my_strcmp(cat_tracking[i].type, "ninja") && (cat_tracking[i].alive == 1))
       {
         draw_ninja_cat(&cat_tracking[i]);
+        //printf("normal ninja drawn!\n");
       }
-      else if(strcmp(cat_tracking[i].type, "tall") && (cat_tracking[i].alive == 1))
+      else if(my_strcmp(cat_tracking[i].type, "tall") && (cat_tracking[i].alive == 1))
       {
         draw_tall_cat(&cat_tracking[i]);
       }
