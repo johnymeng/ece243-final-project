@@ -477,7 +477,7 @@ void init_new_background()
     int i = 0; 
     for(int y = 0; y < 240; y++)
     {
-        for(int x = 0; x < 340; x++)
+        for(int x = 0; x < 320; x++)
         {
             background_2[x][y] = Background[i];
             i++;
@@ -609,6 +609,30 @@ void draw_mouse(int x, int y, short int line_color){
 		for(j = y; j < (y+8); j++){
 			if ((j >= y && j < y + 4) || (i >= x && i < x + 4)) {
 				plot_pixel(i, j, line_color);
+
+			}
+		}
+	} 
+}
+
+void draw_mouse_2(int x, int y, int line_color[320][240]){
+	int i, j;
+	for(i = x; i < (x+8); i++){
+		for(j = y; j < (y+8); j++){
+			if ((j >= y && j < y + 4) || (i >= x && i < x + 4)) {
+				plot_pixel(i, j, background_2[i][j]);
+
+			}
+		}
+	} 
+}
+
+void draw_mouse_3(int x, int y, int line_color[320][240]){
+	int i, j;
+	for(i = x; i < (x+8); i++){
+		for(j = y; j < (y+8); j++){
+			if ((j >= y && j < y + 4) || (i >= x && i < x + 4)) {
+				plot_pixel(i, j, start_screen_2[i][j]);
 
 			}
 		}
@@ -751,11 +775,12 @@ void ps2_mouse_ISQ() {
        // int i = mouse_x * mouse_y;
        if(game_start && start_mouse)
        {
-            draw_mouse(mouse_loc[2].x_pos, mouse_loc[2].y_pos, background_2[mouse_x][mouse_y]);
+             draw_mouse_2(mouse_loc[2].x_pos, mouse_loc[2].y_pos, background_2);
+            //draw_mouse(mouse_loc[1].x_pos, mouse_loc[1].y_pos, background_2[mouse_x][mouse_y]);
        }
        else if(!game_start && start_mouse)
        {
-            draw_mouse(mouse_loc[2].x_pos,mouse_loc[2].y_pos, start_screen_2[mouse_x][mouse_y]);
+            draw_mouse_3(mouse_loc[2].x_pos,mouse_loc[2].y_pos, start_screen_2);
             //if(left_click) game_start = 1;
             //draw_background();
        }
@@ -859,6 +884,7 @@ void ps2_mouse_ISQ() {
         }
 		
 		draw_mouse(mouse_x,mouse_y, line_color);
+    
         // if(mouse_y > 195)
         // {
         //     for(int x = 0; x < 320; x++)
@@ -3410,7 +3436,7 @@ void init_start_screen_2()
     int i = 0; 
     for(int y = 0; y < 240; y++)
     {
-        for(int x = 0; x < 340; x++)
+        for(int x = 0; x < 320; x++)
         {
             start_screen_2[x][y] = start_screen[i];
             i++;
@@ -3484,7 +3510,7 @@ int main(void)
       //player_money = 800;
 
       ps2_mouse();
-	
+	vsync();
 	// reset
 	volatile int * PS2_ptr = (int *)PS2_BASE;
 	*(PS2_ptr) = 0xFF;
