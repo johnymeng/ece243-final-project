@@ -8,16 +8,11 @@
 /*******************************************************************************
  * This file provides address values that exist in the DE1-SoC Computer
  ******************************************************************************/
-#define BACKGROUND_HEIGHT 320
-#define BACKGROUND_WIDTH 240
 
 #define CAT_PURCHASE_HEIGHT 44
 #define CAT_PURCHASE_WIDTH 320
 int game_start = 0; //keeps start screen shown until something is pressed
 // array size is 28160
-
-#define TALL_CAT_DEAD_HEIGHT 50
-#define TALL_CAT_DEAD_WIDTH 25
 
 // array size is 2500
 #define TALL_CAT_DEAD_HEIGHT 60
@@ -877,34 +872,7 @@ void ps2_mouse_ISQ() {
 		
 }
 
-void buying_cats()
-{
-    if(buy_normal)
-    {
-        new_normal_cat();
-        buy_normal = 0;
-    }
-    if(buy_tank)
-    {
-        new_tank_cat();
-        buy_tank = 0;
-    }
-    if(buy_axe)
-    {
-        new_axe_cat();
-        buy_axe = 0;
-    }
-    if(buy_ninja)
-    {
-        new_ninja_cat();
-        buy_ninja = 0;
-    }
-    if(buy_tall)
-    {
-        new_tall_cat();
-        buy_tall = 0;
-    }
-}
+
 
 /*-------------------------------------------------GLOBAL VARS-----------------------------------------------*/
 
@@ -3462,6 +3430,35 @@ void init_dead()
   }
 }
 void draw_normal_dog(Dog *dog);
+
+void buying_cats()
+{
+    if(buy_normal)
+    {
+        new_normal_cat();
+        buy_normal = 0;
+    }
+    if(buy_tank)
+    {
+        new_tank_cat();
+        buy_tank = 0;
+    }
+    if(buy_axe)
+    {
+        new_axe_cat();
+        buy_axe = 0;
+    }
+    if(buy_ninja)
+    {
+        new_ninja_cat();
+        buy_ninja = 0;
+    }
+    if(buy_tall)
+    {
+        new_tall_cat();
+        buy_tall = 0;
+    }
+}
 /*-------------------------------------------------MAIN-----------------------------------------------*/
 //make it so the player gets $25 per second
 int main(void)
